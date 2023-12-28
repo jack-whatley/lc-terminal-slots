@@ -10,7 +10,7 @@ namespace LCTerminalSlots.Utils
 
             throw new ArgumentOutOfRangeException(
                 nameof(value),
-                value, 
+                value,
                 "Amount of was outside of valid range, can't be below zero"); ;
         }
 
@@ -19,7 +19,7 @@ namespace LCTerminalSlots.Utils
             if (obj is not null) return;
 
             throw new ArgumentNullException(
-                nameof(obj), 
+                nameof(obj),
                 $"{nameof(IsNotNull)} threw exception as {nameof(obj)} was asserted to be not null when it is null");
         }
     }

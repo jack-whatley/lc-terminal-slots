@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCTerminalSlots", "LCTerminalSlots\LCTerminalSlots.csproj", "{D58AE176-13D5-48C1-9A08-6E140CED61B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCTerminalSlots.Tests", "LCTerminalSlots.Tests\LCTerminalSlots.Tests.csproj", "{7DCE22E8-D087-4204-B3BB-C845693396EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCTerminalSlots.Tests", "LCTerminalSlots.Tests\LCTerminalSlots.Tests.csproj", "{F4C082DF-B322-4DBE-87C8-6B827C3FF6EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D58AE176-13D5-48C1-9A08-6E140CED61B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D58AE176-13D5-48C1-9A08-6E140CED61B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58AE176-13D5-48C1-9A08-6E140CED61B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7DCE22E8-D087-4204-B3BB-C845693396EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7DCE22E8-D087-4204-B3BB-C845693396EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7DCE22E8-D087-4204-B3BB-C845693396EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7DCE22E8-D087-4204-B3BB-C845693396EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C082DF-B322-4DBE-87C8-6B827C3FF6EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C082DF-B322-4DBE-87C8-6B827C3FF6EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C082DF-B322-4DBE-87C8-6B827C3FF6EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C082DF-B322-4DBE-87C8-6B827C3FF6EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

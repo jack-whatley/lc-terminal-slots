@@ -12,7 +12,7 @@ namespace LCTerminalSlots.Models
 
             if (interactionResult is not null) return interactionResult;
 
-            return CommandHandler.ExecuteCommand(arguments.Arguments[0], 
+            return CommandHandler.ExecuteCommand(arguments.Arguments[0],
                 new ArgumentStream(arguments.Arguments.Skip(1)), instance);
         }
 

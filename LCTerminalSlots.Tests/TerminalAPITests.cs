@@ -1,6 +1,4 @@
-﻿using System;
 using LCTerminalSlots.Patches;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace LCTerminalSlots.Tests
