@@ -11,7 +11,9 @@ namespace LCTerminalSlots.Tests
         [DataRow(new SlotsEnum[] { SlotsEnum.Clover, SlotsEnum.Clover, SlotsEnum.Clover }, DisplayName = "All bells row")]
         public void CheckSlotsEqualIdentifiesWinningSlots(SlotsEnum[] inputSlots)
         {
-            Assert.IsTrue(SlotsGenerator.CheckSlotsEqual(inputSlots));
+            var slotsGen = new SlotsGenerator();
+
+            Assert.IsTrue(slotsGen.CheckSlotsEqual(inputSlots.ToList()));
         }
 
         [DataTestMethod]
@@ -20,7 +22,9 @@ namespace LCTerminalSlots.Tests
         [DataRow(new SlotsEnum[] { SlotsEnum.Bell, SlotsEnum.Diamond, SlotsEnum.Bell }, DisplayName = "Bell Diamond Bell Case")]
         public void CheckSlotsEqualIdentifiesLosingSlots(SlotsEnum[] inputSlots)
         {
-            Assert.IsFalse(SlotsGenerator.CheckSlotsEqual(inputSlots));
+            var slotsGen = new SlotsGenerator();
+
+            Assert.IsFalse(slotsGen.CheckSlotsEqual(inputSlots.ToList()));
         }
     }
 }

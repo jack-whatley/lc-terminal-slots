@@ -31,6 +31,8 @@ namespace LCTerminalSlots
             CommandHandler.SetInterface(new CustomTerminalInterface());
 
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            DontDestroyOnLoad(this);
         }
     }
 }

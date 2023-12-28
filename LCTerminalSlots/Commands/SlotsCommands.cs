@@ -8,17 +8,31 @@ namespace LCTerminalSlots.Commands
 {
     public class SlotsCommands
     {
+        [TerminalCommand("slothelp", true)]
+        public string SlotsHelp()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(">SLOTSHELP");
+            sb.AppendLine("This command.");
+            sb.AppendLine(">SLOTS [AMOUNT]");
+            sb.AppendLine("Bet the amount of money specified.");
+
+            return sb.ToString();
+        }
+
         [TerminalCommand("slots", true)]
         [CommandInfo("Bet the amount of money specified.", "[AMOUNT]")]
         public string SlotsMain(string amount)
         {
+            var slotsGenerator = new SlotsGenerator();
+
             int.TryParse(amount, out int betValue);
             TerminalAPI.RemoveGroupCredits(betValue);
 
-            var slots = SlotsGenerator.GenerateSlots<SlotsEnum>(3);
-            int winnings = 0;
+            var slots = slotsGenerator.GenerateSlots(3);
+            var winnings = 0;
 
-            if (SlotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2);
+            if (slotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2);
 
             TerminalAPI.AddGroupCredits(winnings);
 
