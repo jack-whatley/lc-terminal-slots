@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\BetterRandom.cs" />
     <Compile Include="Utils\IntegerExtensions.cs" />
+    <Compile Include="Utils\ParamAssert.cs" />
     <Compile Include="Utils\SlotsGenerator.cs" />
     <Compile Include="Utils\SlotsPluginInfo.cs" />
   </ItemGroup>

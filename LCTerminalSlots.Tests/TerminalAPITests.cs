@@ -6,7 +6,7 @@ using Moq;
 namespace LCTerminalSlots.Tests
 {
     [TestClass]
-    public class TerminalAPITests
+    public class TerminalAPITests // TODO: Add int max and min value tests (for both add and remove).
     {
         private readonly Mock<Terminal> _terminal = new();
 
@@ -16,20 +16,23 @@ namespace LCTerminalSlots.Tests
             _terminal.Reset();
         }
 
-        [TestMethod]
-        public void AddGroupCreditsAddsCorrectAmount()
+        [DataTestMethod]
+        [DataRow(60, 60, 120, DisplayName = "60 + 60 = 120 Credits")]
+        [DataRow(100, 199, 299, DisplayName = "100 + 199 = 299 Credits")]
+        public void AddGroupCreditsAddsCorrectAmount(int startingAmount, int amountToAdd, int expectedAmount)
         {
             var terminal = _terminal.Object;
-            terminal.groupCredits = 60;
+            terminal.groupCredits = startingAmount;
 
             TerminalAPI.SetTerminal(terminal);
-            TerminalAPI.AddGroupCredits(100);
+            TerminalAPI.AddGroupCredits(amountToAdd);
 
-            Assert.AreEqual(160, terminal.groupCredits);
+            Assert.AreEqual(expectedAmount, terminal.groupCredits);
         }
 
         [TestMethod]
-        public void AddGroupCreditsRemovesCorrectAmount()
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void AddGroupCreditsPreventsNegativeInputAmount()
         {
             var terminal = _terminal.Object;
             terminal.groupCredits = 60;
@@ -37,23 +40,25 @@ namespace LCTerminalSlots.Tests
             TerminalAPI.SetTerminal(terminal);
             TerminalAPI.AddGroupCredits(-40);
 
-            Assert.AreEqual(20, terminal.groupCredits);
+            Assert.Fail();
         }
 
-        [TestMethod]
-        public void RemoveGroupCreditsRemovesCorrectAmount()
+        [DataTestMethod]
+        [DataRow(60, 40, 20, DisplayName = "60 - 40 = 20 Credits")]
+        [DataRow(100, 99, 1, DisplayName = "100 - 99 = 1 Credit")]
+        public void RemoveGroupCreditsRemovesCorrectAmount(int startingAmount, int amountToRemove, int expectedAmount)
         {
             var terminal = _terminal.Object;
-            terminal.groupCredits = 60;
+            terminal.groupCredits = startingAmount;
 
             TerminalAPI.SetTerminal(terminal);
-            TerminalAPI.RemoveGroupCredits(40);
+            TerminalAPI.RemoveGroupCredits(amountToRemove);
 
-            Assert.AreEqual(20, terminal.groupCredits);
+            Assert.AreEqual(expectedAmount, terminal.groupCredits);
         }
 
         [TestMethod]
-        public void RemoveGroupCreditsAvoidsNegative()
+        public void RemoveGroupCreditsPreventsNegativeGroupCredits()
         {
             var terminal = _terminal.Object;
             terminal.groupCredits = 60;
@@ -66,13 +71,23 @@ namespace LCTerminalSlots.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void RemoveGroupCreditsNegativeArgumentException()
+        public void RemoveGroupCreditsPreventsNegativeInputAmount()
         {
             var terminal = _terminal.Object;
             terminal.groupCredits = 60;
 
             TerminalAPI.SetTerminal(terminal);
             TerminalAPI.RemoveGroupCredits(-100);
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ArgumentNullExceptionIfTerminalNull()
+        {
+            TerminalAPI.SetTerminal(null);
+            TerminalAPI.AddGroupCredits(100);
 
             Assert.Fail();
         }

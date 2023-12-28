@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using LCTerminalSlots.Utils;
 
 namespace LCTerminalSlots.Patches
 {
@@ -26,11 +27,10 @@ namespace LCTerminalSlots.Patches
         /// <param name="amount">Amount of group credits to add</param>
         public static void AddGroupCredits(int amount)
         {
-            if (_terminal is null) return;
+            ParamAssert.IsNotNull(_terminal);
+            ParamAssert.IsGreaterThanOrEqualToZero(amount);
 
-            _terminal.useCreditsCooldown = true;
-            _terminal.groupCredits += amount;
-            _terminal.SyncGroupCreditsServerRpc(_terminal.groupCredits, _terminal.numberOfItemsInDropship);
+            SetTerminalCredits(_terminal!.groupCredits + amount);
         }
 
         /// <summary>
@@ -39,24 +39,26 @@ namespace LCTerminalSlots.Patches
         /// <param name="amount">Amount of credits to remove as a positive integer</param>
         public static void RemoveGroupCredits(int amount)
         {
+            ParamAssert.IsNotNull(_terminal);
+            ParamAssert.IsGreaterThanOrEqualToZero(amount);
+
+            var remainingAmount = _terminal!.groupCredits - amount;
+
+            SetTerminalCredits(remainingAmount >= 0 ? remainingAmount : 0);
+        }
+
+        private static void SetTerminalCredits(int credits)
+        {
             if (_terminal is null) return;
-            if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount), amount, "Amount of was outside of valid range, can't be below zero");
 
-            var remainingAmount = _terminal.groupCredits - amount;
-
-            if (remainingAmount >= 0)
-            {
-                AddGroupCredits(-amount);
-            } 
-            else
-            {
-                AddGroupCredits(-_terminal.groupCredits);
-            }
+            _terminal.useCreditsCooldown = true;
+            _terminal.groupCredits = credits;
+            _terminal.SyncGroupCreditsServerRpc(_terminal.groupCredits, _terminal.numberOfItemsInDropship);
         }
 
         #region TestingHelpers
 
-        public static void SetTerminal(Terminal mockTerminal)
+        public static void SetTerminal(Terminal? mockTerminal)
         {
             _terminal = mockTerminal;
         }
