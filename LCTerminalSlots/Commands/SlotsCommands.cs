@@ -16,11 +16,9 @@ namespace LCTerminalSlots.Commands
             TerminalAPI.RemoveGroupCredits(betValue);
 
             var slots = SlotsGenerator.GenerateSlots<SlotsEnum>(3);
-            int winnings = 0; double multiplier = 0;
+            int winnings = 0;
 
-            if (BetterRandom.GetRandomSlot(100) > 75) multiplier = 1.25;
-
-            if (SlotsGenerator.CheckSlotsEqual(slots)) winnings = (int)(betValue * ((int)slots[0] + 2) * multiplier);
+            if (SlotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2);
 
             TerminalAPI.AddGroupCredits(winnings);
 
@@ -29,7 +27,6 @@ namespace LCTerminalSlots.Commands
             sb.AppendLine($"You got {slots[0]} {slots[1]} {slots[2]}");
             sb.AppendLine("");
             sb.AppendLine($"You have won {winnings}");
-            if (multiplier > 0) sb.AppendLine($"With a multiplier of {multiplier}");
 
             return sb.ToString();
         }
