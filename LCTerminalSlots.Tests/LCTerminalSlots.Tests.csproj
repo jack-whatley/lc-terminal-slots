@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\LCTerminalSlots\LCTerminalSlots\.assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 
