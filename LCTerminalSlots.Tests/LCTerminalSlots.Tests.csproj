@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\LCTerminalSlots\LCTerminalSlots\.assemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\.assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
 
