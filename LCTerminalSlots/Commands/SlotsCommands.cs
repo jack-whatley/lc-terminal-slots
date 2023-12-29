@@ -24,9 +24,13 @@ namespace LCTerminalSlots.Commands
         [CommandInfo("Bet the amount of money specified.", "[AMOUNT]")]
         public string SlotsMain(string amount)
         {
+            int.TryParse(amount, out int betValue);
+
+            if (TerminalAPI.GetCreditsCount() - betValue < 0) return "You can't afford that...";
+            if (betValue == 0) return "Bets must be larger than zero...";
+
             var slotsGenerator = new SlotsGenerator();
 
-            int.TryParse(amount, out int betValue);
             TerminalAPI.RemoveGroupCredits(betValue);
 
             var slots = slotsGenerator.GenerateSlots(3);
