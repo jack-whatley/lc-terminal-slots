@@ -41,6 +41,7 @@ jobs:
           prerelease: false
       - name: Upload Mod DLL
         id: uploaded_release_asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -50,6 +51,7 @@ jobs:
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Mod DLL
         id: uploaded_release_dependency
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
