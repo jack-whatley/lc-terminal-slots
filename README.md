@@ -1,5 +1,5 @@
 # Lethal Company Terminal Slots
-A simple mod that adds different types of gambling to the Lethal Company terminal. There are options to gamble for money, random events (good and bad), and items.
+A simple mod that adds different types of gambling to the Lethal Company terminal. There are options to gamble for money, (coming soon) random events (good and bad), (coming soon) and items.
 
 ### Versions
 - v0.0.2
