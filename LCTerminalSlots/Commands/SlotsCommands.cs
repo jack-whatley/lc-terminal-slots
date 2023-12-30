@@ -34,7 +34,7 @@ namespace LCTerminalSlots.Commands
             TerminalAPI.RemoveGroupCredits(betValue);
             
             var slots = slotsGenerator.GenerateSlots(3);
-            int winnings = 0; int multiplier = BetterRandom.GetRandomSlot(5) + 1;
+            int winnings = 0; int multiplier = BetterRandom.GetRandomSlot(3) + 1;
 
             bool slotFullSet = slotsGenerator.CheckSlotsEqual(slots);
             bool slotHalfWin = slotsGenerator.CheckHalfWin(slots);
