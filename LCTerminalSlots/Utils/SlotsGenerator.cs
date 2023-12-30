@@ -26,5 +26,10 @@ namespace LCTerminalSlots.Utils
 
             return appearanceCount == 3;
         }
+
+        public bool CheckHalfWin(List<SlotsEnum> inputSlots)
+        {
+            return inputSlots.GroupBy(slot => slot).Count(grp => grp.Count() == 2) == 1;
+        }
     }
 }

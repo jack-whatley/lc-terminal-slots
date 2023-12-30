@@ -17,14 +17,34 @@ namespace LCTerminalSlots.Tests
         }
 
         [DataTestMethod]
-        [DataRow(new SlotsEnum[] { SlotsEnum.Cherry, SlotsEnum.Cherry, SlotsEnum.Clover }, DisplayName = "Cherry Cherry Clover Case")]
-        [DataRow(new SlotsEnum[] { SlotsEnum.Bell, SlotsEnum.Bell, SlotsEnum.Dollar }, DisplayName = "Bell Bell Dollar Case")]
-        [DataRow(new SlotsEnum[] { SlotsEnum.Bell, SlotsEnum.Diamond, SlotsEnum.Bell }, DisplayName = "Bell Diamond Bell Case")]
+        [DataRow(new[] { SlotsEnum.Cherry, SlotsEnum.Cherry, SlotsEnum.Clover }, DisplayName = "Cherry Cherry Clover Case")]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Bell, SlotsEnum.Dollar }, DisplayName = "Bell Bell Dollar Case")]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Diamond, SlotsEnum.Bell }, DisplayName = "Bell Diamond Bell Case")]
         public void CheckSlotsEqualIdentifiesLosingSlots(SlotsEnum[] inputSlots)
         {
             var slotsGen = new SlotsGenerator();
 
             Assert.IsFalse(slotsGen.CheckSlotsEqual(inputSlots.ToList()));
+        }
+
+        [DataTestMethod]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Diamond, SlotsEnum.Bell }, DisplayName = "Spaced out match")]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Bell, SlotsEnum.Diamond }, DisplayName = "Consecutive match")]
+        public void CheckHalfWinIdentifiesMatches(SlotsEnum[] inputSlots)
+        {
+            var slotsGen = new SlotsGenerator();
+
+            Assert.IsTrue(slotsGen.CheckHalfWin(inputSlots.ToList()));
+        }
+
+        [DataTestMethod]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Diamond, SlotsEnum.Dollar }, DisplayName = "All different values")]
+        [DataRow(new[] { SlotsEnum.Bell, SlotsEnum.Bell, SlotsEnum.Bell }, DisplayName = "All matching values")]
+        public void CheckHalfWinIdentifiesNonMatch(SlotsEnum[] inputSlots)
+        {
+            var slotsGen = new SlotsGenerator();
+
+            Assert.IsFalse(slotsGen.CheckHalfWin(inputSlots.ToList()));
         }
     }
 }
