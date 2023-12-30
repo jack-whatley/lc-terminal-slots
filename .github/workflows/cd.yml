@@ -10,6 +10,10 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2.0
+    - name: Restore Packages
+      uses: nuget restore LCTerminalSlots.sln
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
