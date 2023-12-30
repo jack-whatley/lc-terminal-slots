@@ -49,7 +49,7 @@ jobs:
         with:
           upload_url: ${{ steps.created_release.outputs.upload_url }}
           asset_path: ./Output/LCTerminalSlots.dll
-          asset_name: LCTerminalSlots-${{ github.ref_name }}.dll
+          asset_name: LCTerminalSlots.dll
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Mod DLL
         id: uploaded_release_dependency
