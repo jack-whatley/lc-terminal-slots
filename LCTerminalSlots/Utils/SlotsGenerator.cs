@@ -11,7 +11,7 @@ namespace LCTerminalSlots.Utils
         {
             var slotList = new List<SlotsEnum>();
 
-            for (int i = 0; i < length + 1; i++)
+            for (int i = 0; i < length; i++)
             {
                 var number = BetterRandom.GetRandomSlot(Enum.GetNames(typeof(SlotsEnum)).Length);
                 slotList.Add(number.ToEnum<SlotsEnum>());
