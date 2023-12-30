@@ -50,7 +50,7 @@ namespace LCTerminalSlots.Commands
             sb.AppendLine($"You have won {winnings}");
             if (slotFullSet && multiplier > 1) sb.AppendLine($"Including a {multiplier}x multiplier");
 
-            ChatAPI.SendServerMessage($"{GameNetworkManager.Instance.localPlayerController.playerUsername} bet {betValue} and won {winnings} from slots.");
+            ChatAPI.SendServerMessage($"{GameNetworkManager.Instance.localPlayerController.playerUsername} bet {betValue} on slots and won {winnings} from slots.");
 
             return sb.ToString();
         }
