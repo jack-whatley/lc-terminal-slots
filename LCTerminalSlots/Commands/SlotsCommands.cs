@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using LCTerminalSlots.Patches;
 using LCTerminalSlots.Utils;
 using LethalAPI.LibTerminal.Attributes;
@@ -35,7 +36,8 @@ namespace LCTerminalSlots.Commands
             var slots = slotsGenerator.GenerateSlots(3);
             var winnings = 0;
 
-            if (slotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2);
+            if (slotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2) * (BetterRandom.GetRandomSlot(5) + 1);
+            if (slotsGenerator.CheckHalfWin(slots)) winnings = (int)(betValue * double.Parse($"1.{(int)slots[0]}"));
 
             TerminalAPI.AddGroupCredits(winnings);
 
