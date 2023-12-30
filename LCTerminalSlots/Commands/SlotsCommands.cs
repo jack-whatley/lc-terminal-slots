@@ -39,7 +39,7 @@ namespace LCTerminalSlots.Commands
             bool slotFullSet = slotsGenerator.CheckSlotsEqual(slots);
             bool slotHalfWin = slotsGenerator.CheckHalfWin(slots);
 
-            if (slotFullSet) winnings = betValue * ((int)slots[0] + 2) * multiplier;
+            if (slotFullSet) winnings = betValue * ((int)slots[0] + 1) * multiplier;
             if (slotHalfWin) winnings = (int)(betValue * double.Parse($"1.{(int)slots[0]}"));
 
             TerminalAPI.AddGroupCredits(winnings);
