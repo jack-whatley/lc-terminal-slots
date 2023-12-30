@@ -5,7 +5,7 @@ namespace LCTerminalSlots.Utils
 {
     internal static class SlotsAlgorithm
     {
-        internal static string GenerateSlotsFixed(int betValue)
+        internal static string GenerateSlotsCalculated(int betValue)
         {
             // TerminalAPI.GetCreditsCount()
 
