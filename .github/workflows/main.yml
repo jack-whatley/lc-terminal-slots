@@ -36,7 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          bodyFile: 'RELEASE_LAYOUT.md'
+          body_path: ./RELEASE_LAYOUT.md
           tag_name: ${{ github.ref_name }}
           release_name: Lethal Company Gambling Mod ${{ github.ref_name }}
           draft: true
