@@ -92,6 +92,7 @@
     <Compile Include="Commands\SlotsCommands.cs" />
     <Compile Include="Models\CustomTerminalInterface.cs" />
     <Compile Include="Models\SlotsEnum.cs" />
+    <Compile Include="Patches\ChatAPI.cs" />
     <Compile Include="Patches\TerminalAPI.cs" />
     <Compile Include="SlotsPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
