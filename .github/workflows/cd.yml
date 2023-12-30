@@ -19,10 +19,8 @@ jobs:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-${{ env.cache-name }}
     - name: Setup NuGet
-      if: steps.nuget-packages.outputs.cache-hit != 'true'
       uses: NuGet/setup-nuget@v1.2.0
     - name: NuGet Restore
-      if: steps.nuget-packages.outputs.cache-hit != 'true'
       run: nuget restore LCTerminalSlots.sln
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
