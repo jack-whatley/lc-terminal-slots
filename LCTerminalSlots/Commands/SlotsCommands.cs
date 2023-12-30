@@ -7,7 +7,7 @@ namespace LCTerminalSlots.Commands
 {
     public class SlotsCommands
     {
-        [TerminalCommand("slothelp", true)]
+        [TerminalCommand("slotshelp", true)]
         public string SlotsHelp()
         {
             var sb = new StringBuilder();

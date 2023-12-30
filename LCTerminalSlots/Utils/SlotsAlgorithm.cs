@@ -1,5 +1,4 @@
-﻿using LCTerminalSlots.Models;
-using LCTerminalSlots.Patches;
+﻿using LCTerminalSlots.Patches;
 using System.Text;
 
 namespace LCTerminalSlots.Utils
