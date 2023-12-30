@@ -34,11 +34,13 @@ namespace LCTerminalSlots.Commands
             TerminalAPI.RemoveGroupCredits(betValue);
             
             var slots = slotsGenerator.GenerateSlots(3);
-            var winnings = 0;
-            var multiplier = BetterRandom.GetRandomSlot(5) + 1;
+            int winnings = 0; int multiplier = BetterRandom.GetRandomSlot(5) + 1;
 
-            if (slotsGenerator.CheckSlotsEqual(slots)) winnings = betValue * ((int)slots[0] + 2) * multiplier;
-            if (slotsGenerator.CheckHalfWin(slots)) winnings = (int)(betValue * double.Parse($"1.{(int)slots[0]}"));
+            bool slotFullSet = slotsGenerator.CheckSlotsEqual(slots);
+            bool slotHalfWin = slotsGenerator.CheckHalfWin(slots);
+
+            if (slotFullSet) winnings = betValue * ((int)slots[0] + 2) * multiplier;
+            if (slotHalfWin) winnings = (int)(betValue * double.Parse($"1.{(int)slots[0]}"));
 
             TerminalAPI.AddGroupCredits(winnings);
 
@@ -47,7 +49,7 @@ namespace LCTerminalSlots.Commands
             sb.AppendLine($"You got {slots[0]} {slots[1]} {slots[2]}");
             sb.AppendLine("");
             sb.AppendLine($"You have won {winnings}");
-            if (multiplier > 1) sb.AppendLine($"Including a {multiplier}x multiplier");
+            if (slotFullSet && multiplier > 1) sb.AppendLine($"Including a {multiplier}x multiplier");
 
             return sb.ToString();
         }
