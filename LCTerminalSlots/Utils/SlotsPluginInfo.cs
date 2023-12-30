@@ -6,6 +6,6 @@
 
         internal const string MOD_NAME = "Lethal Company Terminal Slots";
 
-        internal const string MOD_VER = "0.0.1";
+        internal const string MOD_VER = "0.0.3";
     }
 }
