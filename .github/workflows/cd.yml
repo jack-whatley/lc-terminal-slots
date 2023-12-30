@@ -16,12 +16,23 @@ jobs:
       env:
         cache-name: nuget-package-cache
       with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-${{ env.cache-name }}
+        path: D:\a\lc-terminal-slots\lc-terminal-slots\packages
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/packages.config') }}
     - name: Setup NuGet
+      if: steps.nuget-packages.outputs.cache-hit != 'true'
       uses: NuGet/setup-nuget@v1.2.0
     - name: NuGet Restore
+      if: steps.nuget-packages.outputs.cache-hit != 'true'
       run: nuget restore LCTerminalSlots.sln
+    - name: Cache NuGet Packages
+      if: steps.nuget-packages.outputs.cache-hit != 'true'
+      id: nuget-packages-backup
+      uses: actions/cache@v3
+      env:
+        cache-name: nuget-package-cache
+      with:
+        path: D:\a\lc-terminal-slots\lc-terminal-slots\packages
+        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/packages.config') }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
