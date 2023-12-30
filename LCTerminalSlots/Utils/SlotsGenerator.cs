@@ -5,9 +5,9 @@ using LCTerminalSlots.Models;
 
 namespace LCTerminalSlots.Utils
 {
-    public class SlotsGenerator
+    public static class SlotsGenerator
     {
-        public List<SlotsEnum> GenerateSlots(int length)
+        public static List<SlotsEnum> GenerateSlots(int length)
         {
             var slotList = new List<SlotsEnum>();
 
@@ -20,14 +20,14 @@ namespace LCTerminalSlots.Utils
             return slotList;
         }
 
-        public bool CheckSlotsEqual(List<SlotsEnum> inputSlots)
+        public static bool CheckSlotsEqual(List<SlotsEnum> inputSlots)
         {
             var appearanceCount = inputSlots.Count(x => x == inputSlots[0]);
 
             return appearanceCount == 3;
         }
 
-        public bool CheckHalfWin(List<SlotsEnum> inputSlots)
+        public static bool CheckHalfWin(List<SlotsEnum> inputSlots)
         {
             return inputSlots.GroupBy(slot => slot).Count(grp => grp.Count() == 2) == 1;
         }

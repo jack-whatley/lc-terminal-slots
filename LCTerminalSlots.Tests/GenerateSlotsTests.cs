@@ -8,10 +8,9 @@ namespace LCTerminalSlots.Tests
         [TestMethod]
         public void GenerateSlotsReturnsCorrectNumber()
         {
-            var slotsGen = new SlotsGenerator();
             const int slotsLen = 3;
 
-            var slots = slotsGen.GenerateSlots(slotsLen);
+            var slots = SlotsGenerator.GenerateSlots(slotsLen);
 
             Assert.AreEqual(slotsLen, slots.Count);
         }
