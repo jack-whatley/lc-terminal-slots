@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using LCTerminalSlots.Patches;
 using LCTerminalSlots.Utils;
 using LethalAPI.LibTerminal.Attributes;
