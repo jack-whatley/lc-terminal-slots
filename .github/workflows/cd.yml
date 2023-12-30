@@ -17,7 +17,7 @@ jobs:
         cache-name: nuget-package-cache
       with:
         path: D:\a\lc-terminal-slots\lc-terminal-slots\packages
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/packages.config') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}
     - name: Setup NuGet
       if: steps.nuget-packages.outputs.cache-hit != 'true'
       uses: NuGet/setup-nuget@v1.2.0
@@ -32,7 +32,7 @@ jobs:
         cache-name: nuget-package-cache
       with:
         path: D:\a\lc-terminal-slots\lc-terminal-slots\packages
-        key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/packages.config') }}
+        key: ${{ runner.os }}-${{ env.cache-name }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
