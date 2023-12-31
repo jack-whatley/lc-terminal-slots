@@ -28,7 +28,7 @@ namespace LCTerminalSlots.Commands
             if (TerminalAPI.GetCreditsCount() - betValue < 0) return "You can't afford that...";
             if (betValue == 0) return "Bets must be larger than zero...";
 
-            return SlotsAlgorithm.GenerateSlotsTrueRandom(betValue);
+            return SlotsAlgorithm.GenerateSlotsCalculated(betValue);
         }
     }
 }
