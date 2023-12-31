@@ -12,6 +12,10 @@ namespace LCTerminalSlots.Utils
 
         internal static string GenerateSlotsCalculated(int betValue)
         {
+            const double bigWin = 1;
+            const double smallWin = 0.75;
+            const double noWin = 0;
+
             var slots = new SlotsEnum[3];
             var losingAll = TerminalAPI.GetCreditsCount() - betValue <= 5;
 
@@ -23,17 +27,17 @@ namespace LCTerminalSlots.Utils
                 if (chance > 5)
                 {
                     for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(1.0);
+                    _prevResults.AddItem(bigWin);
                 }
                 else if (chance > 3)
                 {
                     slots[0] = SlotsEnum.Bell;
                     for (int i = 1; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(0.5);
+                    _prevResults.AddItem(smallWin);
                 }
                 else
                 {
-                    _prevResults.AddItem(0.5);
+                    _prevResults.AddItem(smallWin * 2);
                     return GenerateSlotsTrueRandom(betValue);
                 }
             }
@@ -59,7 +63,7 @@ namespace LCTerminalSlots.Utils
 
                         slots[0] = ranEnum.ToEnum<SlotsEnum>();
                         for (int i = 1; i < slots.Length; i++) slots[i] = (ranEnum - 1).ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(0.5);
+                        _prevResults.AddItem(smallWin);
                     }
                     else
                     {
@@ -67,7 +71,7 @@ namespace LCTerminalSlots.Utils
                         slots[0] = SlotsEnum.Bell;
                         slots[1] = SlotsEnum.Diamond;
                         slots[2] = SlotsEnum.Dollar;
-                        _prevResults.AddItem(0);
+                        _prevResults.AddItem(noWin);
                     }
                 }
                 else if (total > 2.5) // medium scorer
@@ -77,7 +81,7 @@ namespace LCTerminalSlots.Utils
                         int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
 
                         for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(1.0);
+                        _prevResults.AddItem(bigWin);
                     }
                     else
                     {
@@ -85,7 +89,7 @@ namespace LCTerminalSlots.Utils
 
                         slots[0] = SlotsEnum.Cherry;
                         for (int i = 1; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(0.5);
+                        _prevResults.AddItem(smallWin);
                     }
                 }
                 else // low scorer
@@ -93,7 +97,7 @@ namespace LCTerminalSlots.Utils
                     int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
 
                     for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(1.0);
+                    _prevResults.AddItem(bigWin * 2);
                 }
             }
 
