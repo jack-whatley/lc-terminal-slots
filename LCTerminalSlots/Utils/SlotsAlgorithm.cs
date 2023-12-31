@@ -46,6 +46,8 @@ namespace LCTerminalSlots.Utils
                 double total = 0;
                 foreach (double score in _prevResults.GetItems()) total += score;
 
+                ModHelpers.Logger.LogInfo($"Score sum: {total}");
+
                 if (total > 5) // high scorer
                 {
                     // coin flip between two or nothing
