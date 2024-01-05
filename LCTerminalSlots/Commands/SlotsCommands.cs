@@ -2,11 +2,19 @@
 using LCTerminalSlots.Patches;
 using LCTerminalSlots.Utils;
 using LethalAPI.LibTerminal.Attributes;
+using LethalAPI.LibTerminal;
 
 namespace LCTerminalSlots.Commands
 {
     public class SlotsCommands
     {
+        private readonly Terminal _instance;
+
+        public SlotsCommands(Terminal instance)
+        {
+            _instance = instance;
+        }
+
         [TerminalCommand("slotshelp", true)]
         public string SlotsHelp()
         {

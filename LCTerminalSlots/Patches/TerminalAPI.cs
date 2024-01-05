@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System;
+using HarmonyLib;
 using LCTerminalSlots.Utils;
 
 namespace LCTerminalSlots.Patches
@@ -8,11 +9,14 @@ namespace LCTerminalSlots.Patches
     {
         private static Terminal? _terminal;
 
+        public static Action<Terminal> OnTerminalInitialised;
+
         [HarmonyPatch("Awake")]
         [HarmonyPostfix]
         public static void Awake(ref Terminal __instance)
         {
             _terminal = __instance;
+            OnTerminalInitialised?.Invoke(__instance);
         }
 
         public static int GetCreditsCount()

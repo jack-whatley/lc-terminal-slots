@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using LCTerminalSlots.Commands;
 using LCTerminalSlots.Models;
+using LCTerminalSlots.Patches;
 using LethalAPI.LibTerminal.Models;
 
 namespace LCTerminalSlots
@@ -17,7 +18,7 @@ namespace LCTerminalSlots
 
         private readonly TerminalModRegistry _registry = TerminalRegistry.CreateTerminalRegistry();
 
-        public string ModFilesPath = "";
+        public static string ModFilesPath = "";
 
         void Awake()
         {
@@ -26,13 +27,19 @@ namespace LCTerminalSlots
             if (!Directory.Exists(ModFilesPath)) Directory.CreateDirectory(ModFilesPath);
 
             /* registering commands */
-            _registry.RegisterFrom<SlotsCommands>();
+            TerminalAPI.OnTerminalInitialised += Handle_TerminalAwake;
 
             CommandHandler.SetInterface(new CustomTerminalInterface());
 
             _harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             DontDestroyOnLoad(this);
+        }
+
+        private void Handle_TerminalAwake(Terminal instance)
+        {
+            var slotsCommands = new SlotsCommands(instance);
+            _registry.RegisterFrom(slotsCommands);
         }
     }
 }
