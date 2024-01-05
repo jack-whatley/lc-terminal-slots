@@ -24,21 +24,20 @@ namespace LCTerminalSlots.Utils
                 int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
                 int chance = BetterRandom.GetRandomSlot(10) + 1; // 1 to 10
 
-                if (chance > 5)
+                switch (chance)
                 {
-                    for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    PrevResults.AddItem(bigWin);
-                }
-                else if (chance > 3)
-                {
-                    slots[0] = SlotsEnum.Bell;
-                    for (int i = 1; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    PrevResults.AddItem(smallWin);
-                }
-                else
-                {
-                    PrevResults.AddItem(smallWin * 2);
-                    return GenerateSlotsTrueRandom(betValue);
+                    case > 5:
+                        slots = GenerateBigWin();
+                        PrevResults.AddItem(bigWin);
+                        break;
+                    case > 3:
+                        slots = GenerateSmallWin();
+                        PrevResults.AddItem(smallWin);
+                        break;
+                    default:
+                        slots = GenerateLoss();
+                        PrevResults.AddItem(smallWin * 2);
+                        break;
                 }
             }
             else // look at memory and decide choice
