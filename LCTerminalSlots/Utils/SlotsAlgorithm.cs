@@ -8,7 +8,7 @@ namespace LCTerminalSlots.Utils
 {
     internal static class SlotsAlgorithm
     {
-        private static readonly MemoryStructure<double> _prevResults = new(10);
+        private static readonly MemoryStructure<double> PrevResults = new(15);
 
         internal static string GenerateSlotsCalculated(int betValue)
         {
@@ -27,17 +27,17 @@ namespace LCTerminalSlots.Utils
                 if (chance > 5)
                 {
                     for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(bigWin);
+                    PrevResults.AddItem(bigWin);
                 }
                 else if (chance > 3)
                 {
                     slots[0] = SlotsEnum.Bell;
                     for (int i = 1; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(smallWin);
+                    PrevResults.AddItem(smallWin);
                 }
                 else
                 {
-                    _prevResults.AddItem(smallWin * 2);
+                    PrevResults.AddItem(smallWin * 2);
                     return GenerateSlotsTrueRandom(betValue);
                 }
             }
@@ -48,56 +48,57 @@ namespace LCTerminalSlots.Utils
                 // memory of less then 5 = terrible win rate
 
                 double total = 0;
-                foreach (double score in _prevResults.GetItems()) total += score;
+                foreach (double score in PrevResults.GetItems()) total += score;
 
                 ModHelpers.Logger.LogInfo($"Score sum: {total}");
 
-                if (total > 5) // high scorer
+                if (total > 5)
                 {
-                    // coin flip between two or nothing
                     if (BetterRandom.GetRandomSlot(2) == 1)
                     {
-                        int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
-
-                        ranEnum = ranEnum > 1 ? ranEnum - 1 : ranEnum + 1;
-
-                        slots[0] = ranEnum.ToEnum<SlotsEnum>();
-                        for (int i = 1; i < slots.Length; i++) slots[i] = (ranEnum - 1).ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(smallWin);
+                        slots = GenerateSmallWin();
+                        PrevResults.AddItem(smallWin);
                     }
                     else
                     {
                         slots = GenerateLoss();
-                        _prevResults.AddItem(noWin);
+                        PrevResults.AddItem(noWin);
                     }
                 }
                 else if (total > 2.5) // medium scorer
                 {
                     if (BetterRandom.GetRandomSlot(5) + 1 > 2)
                     {
-                        int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
-
-                        for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(bigWin);
+                        slots = GenerateBigWin();
+                        PrevResults.AddItem(bigWin);
                     }
                     else
                     {
-                        int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
-
-                        slots[0] = SlotsEnum.Cherry;
-                        for (int i = 1; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                        _prevResults.AddItem(smallWin);
+                        slots = GenerateSmallWin();
+                        PrevResults.AddItem(smallWin);
                     }
                 }
-                else // low scorer
+                else
                 {
-                    int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
-
-                    for (int i = 0; i < slots.Length; i++) slots[i] = ranEnum.ToEnum<SlotsEnum>();
-                    _prevResults.AddItem(bigWin * 2);
+                    slots = GenerateBigWin();
+                    PrevResults.AddItem(bigWin * 2);
                 }
             }
 
+            return HandleOutput(betValue, slots);
+        }
+        
+        internal static string GenerateSlotsTrueRandom(int betValue)
+        {
+            TerminalAPI.RemoveGroupCredits(betValue);
+
+            var slots = SlotsGenerator.GenerateSlots(3);
+
+            return HandleOutput(betValue, slots.ToArray());
+        }
+
+        private static string HandleOutput(int betValue, SlotsEnum[] slots)
+        {
             TerminalAPI.RemoveGroupCredits(betValue);
 
             int winnings = 0; int multiplier = BetterRandom.GetRandomSlot(3) + 1;
@@ -121,43 +122,20 @@ namespace LCTerminalSlots.Utils
 
             return sb.ToString();
         }
-        
-        internal static string GenerateSlotsTrueRandom(int betValue)
-        {
-            TerminalAPI.RemoveGroupCredits(betValue);
-
-            var slots = SlotsGenerator.GenerateSlots(3);
-            int winnings = 0; int multiplier = BetterRandom.GetRandomSlot(3) + 1;
-
-            bool slotFullSet = SlotsGenerator.CheckSlotsEqual(slots);
-            bool slotHalfWin = SlotsGenerator.CheckHalfWin(slots);
-
-            if (slotFullSet) winnings = betValue * ((int)slots[0] + 1) * multiplier;
-            if (slotHalfWin) winnings = (int)(betValue * double.Parse($"1.{(int)slots[0]}"));
-
-            TerminalAPI.AddGroupCredits(winnings);
-
-            var sb = new StringBuilder();
-
-            sb.AppendLine($"You got {slots[0]} {slots[1]} {slots[2]}");
-            sb.AppendLine("");
-            sb.AppendLine($"You have won {winnings}");
-            if (slotFullSet && multiplier > 1) sb.AppendLine($"Including a {multiplier}x multiplier");
-
-            ChatAPI.SendServerMessage($"{GameNetworkManager.Instance.localPlayerController.playerUsername} bet {betValue} on slots and won {winnings}");
-
-            return sb.ToString();
-        }
 
         private static SlotsEnum[] GenerateBigWin()
         {
-            return new SlotsEnum[3];
+            var ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length).ToEnum<SlotsEnum>();
+
+            var returnArr = new[] { ranEnum, ranEnum, ranEnum };
+
+            return returnArr;
         }
 
         private static SlotsEnum[] GenerateSmallWin()
         {
             var randomEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length).ToEnum<SlotsEnum>();
-            var returnArr = new SlotsEnum[] { randomEnum, randomEnum, randomEnum };
+            var returnArr = new[] { randomEnum, randomEnum, randomEnum };
             var ranIndex = BetterRandom.GetRandomSlot(returnArr.Length);
 
             returnArr[ranIndex] = ((int)(randomEnum + 1) % returnArr.Length).ToEnum<SlotsEnum>();
