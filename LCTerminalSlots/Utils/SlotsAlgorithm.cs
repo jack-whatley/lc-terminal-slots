@@ -67,10 +67,7 @@ namespace LCTerminalSlots.Utils
                     }
                     else
                     {
-                        // TODO: randomise this
-                        slots[0] = SlotsEnum.Bell;
-                        slots[1] = SlotsEnum.Diamond;
-                        slots[2] = SlotsEnum.Dollar;
+                        slots = GenerateLoss();
                         _prevResults.AddItem(noWin);
                     }
                 }
@@ -159,7 +156,13 @@ namespace LCTerminalSlots.Utils
 
         private static SlotsEnum[] GenerateSmallWin()
         {
-            return new SlotsEnum[3];
+            var randomEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length).ToEnum<SlotsEnum>();
+            var returnArr = new SlotsEnum[] { randomEnum, randomEnum, randomEnum };
+            var ranIndex = BetterRandom.GetRandomSlot(returnArr.Length);
+
+            returnArr[ranIndex] = ((int)(randomEnum + 1) % returnArr.Length).ToEnum<SlotsEnum>();
+
+            return returnArr;
         }
 
         private static SlotsEnum[] GenerateLoss()
