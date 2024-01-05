@@ -19,7 +19,7 @@ namespace LCTerminalSlots.Utils
             var slots = new SlotsEnum[3];
             var losingAll = TerminalAPI.GetCreditsCount() - betValue <= 5;
 
-            if (losingAll) // keep them addicted
+            if (losingAll)
             {
                 int ranEnum = BetterRandom.GetRandomSlot(Enum.GetValues(typeof(SlotsEnum)).Length);
                 int chance = BetterRandom.GetRandomSlot(10) + 1; // 1 to 10
@@ -150,6 +150,32 @@ namespace LCTerminalSlots.Utils
             ChatAPI.SendServerMessage($"{GameNetworkManager.Instance.localPlayerController.playerUsername} bet {betValue} on slots and won {winnings}");
 
             return sb.ToString();
+        }
+
+        private static SlotsEnum[] GenerateBigWin()
+        {
+            return new SlotsEnum[3];
+        }
+
+        private static SlotsEnum[] GenerateSmallWin()
+        {
+            return new SlotsEnum[3];
+        }
+
+        private static SlotsEnum[] GenerateLoss()
+        {
+            var returnArr = new SlotsEnum[3];
+            var slotsArr = Enum.GetValues(typeof(SlotsEnum)).Cast<SlotsEnum>().ToList();
+
+            for (int i = 0; i < 3; i++)
+            {
+                int ranIndex = BetterRandom.GetRandomSlot(slotsArr.Count);
+
+                returnArr[i] = slotsArr[ranIndex];
+                slotsArr.RemoveAt(ranIndex);
+            }
+
+            return returnArr;
         }
     }
 }
