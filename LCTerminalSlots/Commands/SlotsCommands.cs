@@ -3,6 +3,8 @@ using LCTerminalSlots.Patches;
 using LCTerminalSlots.Utils;
 using LethalAPI.LibTerminal.Attributes;
 using LethalAPI.LibTerminal;
+using UnityEngine;
+using System;
 
 namespace LCTerminalSlots.Commands
 {
@@ -37,6 +39,23 @@ namespace LCTerminalSlots.Commands
             if (betValue <= 0) return "Bets must be larger than zero...";
 
             return SlotsAlgorithm.GenerateSlotsCalculated(betValue);
+        }
+
+        [TerminalCommand("summon", true)]
+        public string SummonOpps(string monsterName, string amount)
+        {
+            if (!int.TryParse(amount, out int monsterCount)) return "Input valid amount...";
+
+            var (result, name) = EnemyHandler.AttemptSpawnEnemy(monsterName, monsterCount);
+
+            if (result)
+            {
+                string output = $"Summoned {monsterCount}x of {name}";
+                ChatAPI.SendServerMessage(output);
+                return output;
+            }
+
+            return "Failed to summon the opps :(";
         }
     }
 }
