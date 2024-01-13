@@ -54,9 +54,8 @@ namespace LCTerminalSlots.Patches
         {
             if (_terminal is null) return;
 
-            _terminal.useCreditsCooldown = true;
             _terminal.groupCredits = credits;
-            _terminal.SyncGroupCreditsServerRpc(_terminal.groupCredits, _terminal.numberOfItemsInDropship);
+            _terminal.SyncTerminalValuesServerRpc();
         }
 
         #region TestingHelpers
